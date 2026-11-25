@@ -11,10 +11,12 @@ public final class FacturacionTienda {
 
     private static final int CLIENTE_ESTUDIANTE = 1;
     private static final int CLIENTE_JUBILADO = 2;
-    private static final int CLIENTE_VIP = 3;
+    private static final int CLIENTE_FAMILIA_NUMEROSA = 3;
+    private static final int CLIENTE_VIP = 4;
 
     private static final double DESCUENTO_ESTUDIANTE = 0.10;
     private static final double DESCUENTO_JUBILADO = 0.15;
+    private static final double DESCUENTO_FAMILIA_NUMEROSA = 0.20;
     private static final double DESCUENTO_VIP = 0.05;
     private static final double RECARGO_ENVIO = 4.95;
     private static final double FACTOR_IVA = 1.21;
@@ -40,7 +42,8 @@ public final class FacturacionTienda {
      *
      * @param precioBase precio de una unidad, en euros
      * @param unidades número de unidades compradas
-     * @param tipoCliente 1 = estudiante (10 %), 2 = jubilado (15 %), 3 = VIP (5 %); cualquier otro valor no tiene descuento
+     * @param tipoCliente 1 = estudiante (10 %), 2 = jubilado (15 %), 3 = familia numerosa (20 %),
+     *        4 = VIP (5 %); cualquier otro valor no tiene descuento
      * @param conEnvio {@code true} si se añade el recargo de envío urgente a domicilio
      * @return importe final en euros, con descuento, recargo de envío e IVA (21 %) aplicados
      */
@@ -62,6 +65,9 @@ public final class FacturacionTienda {
         }
         if (tipoCliente == CLIENTE_JUBILADO) {
             return importe - (importe * DESCUENTO_JUBILADO);
+        }
+        if (tipoCliente == CLIENTE_FAMILIA_NUMEROSA) {
+            return importe - (importe * DESCUENTO_FAMILIA_NUMEROSA);
         }
         if (tipoCliente == CLIENTE_VIP) {
             return importe - (importe * DESCUENTO_VIP);
