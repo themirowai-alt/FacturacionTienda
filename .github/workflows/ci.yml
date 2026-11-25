@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Instalar JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Compilar
+        run: |
+          mkdir -p out
+          javac -Xlint:all -d out src/FacturacionTienda.java
+
+      - name: Ejecutar
+        run: java -cp out FacturacionTienda
+
+      - name: Validar Javadoc
+        run: javadoc -Xdoclint:all -d /tmp/javadoc src/FacturacionTienda.java
